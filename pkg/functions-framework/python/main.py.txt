@@ -1,0 +1,8 @@
+{{ .UserCode }}
+
+if __name__ == "__main__":
+    fc = FunctionContext("{{ .FunctionName }}", {{ .Port }})
+
+    fc.load_user_function(user_function)
+
+    fc.run()

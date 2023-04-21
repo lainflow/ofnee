@@ -1,0 +1,39 @@
+apiVersion: core.openfunction.io/v2beta1
+kind: Function
+metadata:
+  labels:
+    app.kubernetes.io/name: function
+    app.kubernetes.io/instance: dapr-receiver
+    app.kubernetes.io/part-of: ofn
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/created-by: ofn
+  name: dapr-receiver
+spec:
+  code:
+    type: "python"
+    configMapRef: "function-code"
+  port: 50051
+  name: "dapr-receiver"
+---
+apiVersion: v1
+data:
+  dapr-receiver: |-
+    from function_context import FunctionContext
+    from datetime import datetime
+
+    def user_function(context: FunctionContext):
+        print(context.request.metadata, flush=True)
+        print(context.request.text(), flush=True)
+
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+        print("Current Time =", current_time)
+
+        # 用户函数处理逻辑
+        output_data = "hello!!!!!!"
+        return output_data
+kind: ConfigMap
+metadata:
+  name: function-code
+  namespace: default

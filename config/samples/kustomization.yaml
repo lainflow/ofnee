@@ -1,0 +1,4 @@
+## Append samples of your project ##
+resources:
+- core_v2beta1_function.yaml
+#+kubebuilder:scaffold:manifestskustomizesamples
